@@ -20,6 +20,7 @@ int main(void)
 			write(STDOUT_FILENO, "\n", 1);
 			break;
 		}
+        line = parse(line);
 		status = execute(line);
 		free(line);
 	}
