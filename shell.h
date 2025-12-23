@@ -7,5 +7,4 @@
 
 void display_prompt(void);
 
-
 #endif
