@@ -7,6 +7,8 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <string.h>
+#include <unistd.h>
+
 
 /**
  * prompt - displays the shell prompt

@@ -1,9 +1,8 @@
+#include <unistd.h>
 #include "shell.h"
 
-/**
- * prompt - displays the shell prompt
- */
 void prompt(void)
 {
-	write(STDOUT_FILENO, "$ ", 2);
+    if (isatty(STDIN_FILENO))
+        write(STDOUT_FILENO, "$ ", 2);
 }
