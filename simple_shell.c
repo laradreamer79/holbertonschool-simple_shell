@@ -29,11 +29,7 @@ char *read_line(void)
 		free(line);
 		return (NULL);
 	}
-
-	if (read_chars > 0 && line[read_chars - 1] == '\n')
-	{
-		line[read_chars - 1] = '\0';
-	}
+	trim_spaces(line);
 	return (line);
 }
 /**

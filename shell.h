@@ -15,5 +15,6 @@ extern char **environ;
 void display_prompt(void);
 char *read_line(void);
 void execute_command(char *command);
+char *trim_spaces(char *str);
 
 #endif
