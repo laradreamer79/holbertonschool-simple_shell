@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
- * 
- */
+*
+*/
 int main(int argc, char **argv)
 {
 	char *command = NULL;
@@ -13,11 +13,13 @@ int main(int argc, char **argv)
 
 	while (1)
 	{
-		display_prompt();
+		if (isatty(STDIN_FILENO))
+			display_prompt();
 		command = read_line();
 		if (command == NULL)
 		{
-			printf("\n");
+			 if (isatty(STDIN_FILENO))
+				printf("\n");
 			break;
 		}
 		if (strlen(command) > 0)

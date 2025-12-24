@@ -1,16 +1,19 @@
 #include "shell.h"
 /**
- * display_prompt - Displays the shell prompt (#cisfun$)
- * No parameters, no return value
+* display_prompt - Displays the shell prompt (#cisfun$)
+* No parameters, no return value
 */
 void display_prompt(void)
 {
-	printf("#cisfun$");
-	fflush(stdout);
+	if (isatty(STDIN_FILENO))
+	{
+	    printf("#cisfun$");
+	    fflush(stdout);
+	}
 }
 /**
- * read_line - Reads a line of input from user
- *Return: Pointer to the line, or NULL for Ctrl+D
+* read_line - Reads a line of input from user
+*Return: Pointer to the line, or NULL for Ctrl+D
 */
 char *read_line(void)
 {
@@ -34,14 +37,15 @@ char *read_line(void)
 	return (line);
 }
 /**
- * execute_command - Executes a command using fork/execve
- * @command: The command to execute (full path like /bin/ls)
- * No return value
+* execute_command - Executes a command using fork/execve
+* @command: The command to execute (full path like /bin/ls)
+* No return value
 */
 void execute_command(char *command)
 {
 	pid_t pid;
 	int status;
+
 	char *args[2];
 
 	pid = fork();
