@@ -1,28 +1,31 @@
 #include "shell.h"
-
 /**
- * main - entry point for simple shell
- *
- * Return: always 0
+ * 
  */
-int main(void)
+int main(int argc, char **argv)
 {
-	char *line;
-	int status;
+	char *command = NULL;
 
-	status = 1;
-	while (status)
+	signal(SIGINT, SIG_IGN);
+
+	(void)argc;
+	(void)argv;
+
+	while (1)
 	{
-		prompt();
-		line = read_line();
-		if (line == NULL)
+		display_prompt();
+		command = read_line();
+		if (command == NULL)
 		{
-			write(STDOUT_FILENO, "\n", 1);
+			printf("\n");
 			break;
 		}
-        line = parse(line);
-		status = execute(line);
-		free(line);
+		if (strlen(command) > 0)
+		{
+			execute_command(command);
+		}
+		free(command);
+		command = NULL;
 	}
 	return (0);
 }
