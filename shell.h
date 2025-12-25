@@ -16,5 +16,6 @@ void display_prompt(void);
 char *read_line(void);
 void execute_command(char *command);
 char *trim_spaces(char *str);
+char **split_line(char *line);
 
 #endif

@@ -42,3 +42,38 @@ char *trim_spaces(char *str)
 
 	return (str);
 }
+/**
+ * split_line - Splits and cleans a line
+ * @line: The line to split
+ *
+ * Return: Array of tokens
+ */
+char **split_line(char *line)
+{
+	char **tokens;
+	char *token;
+	int i = 0;
+
+	/* Clean the line first */
+	if (trim_spaces(line) == NULL)
+		return (NULL);
+
+	tokens = malloc(64 * sizeof(char *));
+	if (tokens == NULL)
+		return (NULL);
+
+	token = strtok(line, " ");
+	while (token != NULL)
+	{
+		tokens[i] = token;
+		i++;
+
+		if (i >= 63)
+			break;
+
+		token = strtok(NULL, " ");
+	}
+	tokens[i] = NULL;
+
+	return (tokens);
+}
