@@ -42,38 +42,50 @@ char *trim_spaces(char *str)
 
 	return (str);
 }
+#include "shell.h"
+
 /**
- * split_line - Splits and cleans a line
- * @line: The line to split
+ * split_line - splits a line into tokens
+ * @line: the input line
  *
- * Return: Array of tokens
+ * Return: array of tokens, NULL-terminated
  */
 char **split_line(char *line)
 {
-	char **tokens;
-	char *token;
+	char **args = malloc(10 * sizeof(char *));
 	int i = 0;
+	char *p = line;
 
-	/* Clean the line first */
-	if (trim_spaces(line) == NULL)
+	if (args == NULL)
 		return (NULL);
 
-	tokens = malloc(64 * sizeof(char *));
-	if (tokens == NULL)
-		return (NULL);
+	while (*p == ' ')
+		p++;
 
-	token = strtok(line, " ");
-	while (token != NULL)
+	args[i] = p;
+	i++;
+
+	while (*p != '\0')
 	{
-		tokens[i] = token;
-		i++;
+		if (*p == ' ')
+		{
+			*p = '\0';
+			p++;
+			while (*p == ' ')
+				p++;
 
-		if (i >= 63)
-			break;
-
-		token = strtok(NULL, " ");
+			if (*p != '\0')
+			{
+				args[i] = p;
+				i++;
+			}
+		}
+		else
+		{
+			p++;
+		}
 	}
-	tokens[i] = NULL;
 
-	return (tokens);
+	args[i] = NULL;
+	return (args);
 }

@@ -6,7 +6,7 @@
 int main(void)
 {
 	char *command = NULL;
-	char **args;
+	char **args = NULL;
 
 	signal(SIGINT, SIG_IGN);
 
@@ -24,8 +24,9 @@ int main(void)
 		}
 		args = split_line(command);
 		if (args != NULL && args[0] != NULL)
-			execute_command(command);
-		free(args);
+			execute_command(args);
+		if (args != NULL)
+			free(args);
 		free(command);
 	}
 	return (0);
