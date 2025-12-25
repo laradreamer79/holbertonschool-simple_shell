@@ -1,18 +1,44 @@
 #include "shell.h"
+/**
+ * trim_spaces - removes whitespace from start and end
+ * @str: string to clean
+ * Return: cleaned string, or NULL if all spaces
+ */
 char *trim_spaces(char *str)
 {
-	char *end;
+	int i = 0, j = 0;
+	int len;
 
-	while (*str == ' ' || *str == '\t')
-		str++;
+	if (str == NULL || str[0] == '\0')
+		return (NULL);
 
-	if (*str == '\0')
-		return (str);
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' ||
+		str[i] == '\r' || str[i] == '\f' || str[i] == '\v')
+		i++;
 
-	end = str + strlen(str) - 1;
-	while (end > str && (*end == ' ' || *end == '\t' || *end == '\n'))
-		end--;
+	if (str[i] == '\0')
+	{
+		str[0] = '\0';
+		return (NULL);
+	}
 
-	*(end + 1) = '\0';
+	j = 0;
+	while (str[i] != '\0')
+	{
+		str[j] = str[i];
+		i++;
+		j++;
+	}
+	str[j] = '\0';
+
+	len = j;
+	while (len > 0 && (str[len - 1] == ' ' || str[len - 1] == '\t' ||
+		str[len - 1] == '\n' || str[len - 1] == '\r' ||
+		str[len - 1] == '\f' || str[len - 1] == '\v'))
+	{
+		len--;
+	}
+	str[len] = '\0';
+
 	return (str);
 }

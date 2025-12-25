@@ -1,33 +1,36 @@
 #include "shell.h"
 /**
-*
-*/
-int main(int argc, char **argv)
+ * main - entry point for simple shell
+ * Return: 0 on success
+ */
+int main(void)
 {
 	char *command = NULL;
 
 	signal(SIGINT, SIG_IGN);
 
-	(void)argc;
-	(void)argv;
-
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			display_prompt();
+
 		command = read_line();
+
 		if (command == NULL)
 		{
-			 if (isatty(STDIN_FILENO))
+			if (isatty(STDIN_FILENO))
 				printf("\n");
 			break;
 		}
-		if (strlen(command) > 0)
+
+		if (trim_spaces(command) == NULL || strlen(command) == 0)
 		{
-			execute_command(command);
+			free(command);
+			continue;
 		}
+
+		execute_command(command);
 		free(command);
-		command = NULL;
 	}
 	return (0);
 }

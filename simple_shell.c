@@ -1,24 +1,20 @@
 #include "shell.h"
 /**
-* display_prompt - Displays the shell prompt (#cisfun$)
-* No parameters, no return value
-*/
+ * display_prompt - displays shell prompt
+ */
 void display_prompt(void)
 {
-	if (isatty(STDIN_FILENO))
-	{
-	    printf("#cisfun$");
-	    fflush(stdout);
-	}
+	printf("#cisfun$ ");
+	fflush(stdout);
 }
+
 /**
-* read_line - Reads a line of input from user
-*Return: Pointer to the line, or NULL for Ctrl+D
-*/
+ * read_line - reads a line from stdin
+ * Return: pointer to line, or NULL on EOF
+ */
 char *read_line(void)
 {
 	char *line = NULL;
-
 	size_t len = 0;
 	ssize_t read_chars;
 
@@ -29,19 +25,21 @@ char *read_line(void)
 		free(line);
 		return (NULL);
 	}
-	trim_spaces(line);
+
+	if (read_chars > 0 && line[read_chars - 1] == '\n')
+		line[read_chars - 1] = '\0';
+
 	return (line);
 }
+
 /**
-* execute_command - Executes a command using fork/execve
-* @command: The command to execute (full path like /bin/ls)
-* No return value
-*/
+ * execute_command - executes a command using fork/execve
+ * @command: command to execute
+ */
 void execute_command(char *command)
 {
 	pid_t pid;
 	int status;
-
 	char *args[2];
 
 	pid = fork();
@@ -55,9 +53,10 @@ void execute_command(char *command)
 	{
 		args[0] = command;
 		args[1] = NULL;
+
 		if (execve(command, args, environ) == -1)
 		{
-			fprintf(stderr, "./shell: No such file or directory\n");
+			fprintf(stderr, "./hsh: No such file or directory\n");
 			_exit(EXIT_FAILURE);
 		}
 	}
