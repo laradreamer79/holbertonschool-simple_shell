@@ -21,7 +21,6 @@ char *trim_spaces(char *str)
 		str[0] = '\0';
 		return (NULL);
 	}
-
 	j = 0;
 	while (str[i] != '\0')
 	{
@@ -42,8 +41,6 @@ char *trim_spaces(char *str)
 
 	return (str);
 }
-#include "shell.h"
-
 /**
  * split_line - splits a line into tokens
  * @line: the input line
@@ -61,10 +58,13 @@ char **split_line(char *line)
 
 	while (*p == ' ')
 		p++;
-
+	if (*p == '\0')
+	{
+		free(args);
+		return (NULL);
+	}
 	args[i] = p;
 	i++;
-
 	while (*p != '\0')
 	{
 		if (*p == ' ')
@@ -73,11 +73,12 @@ char **split_line(char *line)
 			p++;
 			while (*p == ' ')
 				p++;
-
 			if (*p != '\0')
 			{
 				args[i] = p;
 				i++;
+				if (i >= 9)
+					break;
 			}
 		}
 		else
@@ -85,7 +86,6 @@ char **split_line(char *line)
 			p++;
 		}
 	}
-
 	args[i] = NULL;
 	return (args);
 }
