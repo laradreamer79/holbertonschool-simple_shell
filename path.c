@@ -15,7 +15,8 @@ char *find_in_path(char *command)
 			return (strdup(command));
 		return (NULL);
 	}
-	path = getenv("PATH");
+	path = _getenv("PATH");
+
 	if (path == NULL || path[0] == '\0')
 		return (NULL);
 	path_copy = strdup(path);
@@ -44,3 +45,4 @@ char *find_in_path(char *command)
 	free(path_copy);
 	return (NULL);
 }
+
