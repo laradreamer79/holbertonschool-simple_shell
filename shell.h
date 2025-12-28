@@ -19,5 +19,6 @@ char *trim_spaces(char *str);
 char **split_line(char *line);
 char *find_in_path(char *command);
 char *_getenv(const char *name);
+void print_env(void);
 
 #endif

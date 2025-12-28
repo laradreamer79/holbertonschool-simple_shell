@@ -12,6 +12,11 @@ int execute_command(char **args)
 
 	if (args == NULL || args[0] == NULL)
 		return (0);
+	if (strcmp(args[0], "env") == 0)
+	{
+		print_env();
+		return (0);
+	}
 
 	full_path = find_in_path(args[0]);
 	if (full_path == NULL)
