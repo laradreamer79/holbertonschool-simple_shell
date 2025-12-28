@@ -24,12 +24,19 @@ int main(void)
 			break;
 		}
 		args = split_line(command);
-			exit(0);
+
+		if (args != NULL && args[0] != NULL &&
+				strcmp(args[0], "exit") == 0)
+		{
+			free(args);
+			free(command);
+			break;
+		}
 		if (args != NULL && args[0] != NULL)
 			status = execute_command(args);
-		if (args != NULL)
-			free(args);
+		free(args);
 		free(command);
 	}
 	return (status);
 }
+
