@@ -2,47 +2,48 @@
 /**
  * execute_command - executes command with PATH support
  * @args: array of command and arguments
+ * Return: exit status
  */
-void execute_command(char **args)
+int execute_command(char **args)
 {
 	pid_t pid;
 	int status;
 	char *full_path;
-	char *original_cmd = NULL;
 
 	if (args == NULL || args[0] == NULL)
-		return;
+		return (0);
 
 	full_path = find_in_path(args[0]);
 	if (full_path == NULL)
 	{
 		fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-		return;
+		return (127);
 	}
+
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork");
 		free(full_path);
-		return;
+		return (1);
 	}
-	else if (pid == 0)
-	{
-		original_cmd = strdup(args[0]);
-		args[0] = full_path;
 
+	if (pid == 0)
+	{
+		args[0] = full_path;
 		if (execve(args[0], args, environ) == -1)
 		{
-			fprintf(stderr, "./hsh: 1: %s: not found\n",
-				(original_cmd != NULL) ? original_cmd : args[0]);
+			fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
 			free(full_path);
-			free(original_cmd);
-			_exit(EXIT_FAILURE);
+			_exit(127);
 		}
 	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		free(full_path);
-	}
+
+	waitpid(pid, &status, 0);
+	free(full_path);
+
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (1);
 }
+

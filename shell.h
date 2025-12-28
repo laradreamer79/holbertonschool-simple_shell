@@ -14,7 +14,7 @@ extern char **environ;
 
 void display_prompt(void);
 char *read_line(void);
-void execute_command(char **args);
+int execute_command(char **args);
 char *trim_spaces(char *str);
 char **split_line(char *line);
 char *find_in_path(char *command);

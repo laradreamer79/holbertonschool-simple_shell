@@ -7,6 +7,7 @@ int main(void)
 {
 	char *command = NULL;
 	char **args = NULL;
+	int status = 0;
 
 	signal(SIGINT, SIG_IGN);
 
@@ -24,10 +25,10 @@ int main(void)
 		}
 		args = split_line(command);
 		if (args != NULL && args[0] != NULL)
-			execute_command(args);
+			status = execute_command(args);
 		if (args != NULL)
 			free(args);
 		free(command);
 	}
-	return (0);
+	return (status);
 }
