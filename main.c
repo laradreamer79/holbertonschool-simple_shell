@@ -24,6 +24,7 @@ int main(void)
 			break;
 		}
 		args = split_line(command);
+			exit(0);
 		if (args != NULL && args[0] != NULL)
 			status = execute_command(args);
 		if (args != NULL)
