@@ -17,14 +17,12 @@ int execute_command(char **args)
 		print_env();
 		return (0);
 	}
-
 	full_path = find_in_path(args[0]);
 	if (full_path == NULL)
 	{
 		fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
 		return (127);
 	}
-
 	pid = fork();
 	if (pid == -1)
 	{
@@ -32,7 +30,6 @@ int execute_command(char **args)
 		free(full_path);
 		return (1);
 	}
-
 	if (pid == 0)
 	{
 		args[0] = full_path;
@@ -43,12 +40,9 @@ int execute_command(char **args)
 			_exit(127);
 		}
 	}
-
 	waitpid(pid, &status, 0);
 	free(full_path);
-
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
 }
-
