@@ -3,6 +3,9 @@
 ## Table of Contents
 - [Project Description](#project-description)
 - [Features](#features)
+- [Requirements Met](#Requirements-Met)
+- [System calls & functions used](#System-calls-&-functions-used)
+- [`<string.h>` functions used](#`<string.h>`-functions-used)
 - [Compilation](#compilation)
 - [Usage](#usage)
 - [exit](#exit)
@@ -40,6 +43,52 @@ system calls.
 
 ---
 
+## ✅ Requirements Met
+
+- ✅ Compiled on Ubuntu 20.04 LTS with `-Wall -Werror -Wextra -pedantic -std=gnu89`
+- ✅ All files end with a new line
+- ✅ Betty style compliant (checked with `betty-style.pl` and `betty-doc.pl`)
+- ✅ No memory leaks
+- ✅ Maximum 5 functions per file
+- ✅ Header files include guarded
+- ✅ System calls used only when necessary
+- ✅ Output matches `/bin/sh` exactly
+
+---
+
+##  System calls & functions used
+
+| Function | Purpose                     | Used in our shell      |
+|---------|-----------------------------|------------------------|
+| execve()| Execute program             | ✅ Command execution   |
+| exit()  | Terminate process           | ✅ Clean exit handling |
+| _exit() | Immediate process termination | ✅ Child process exit |
+| fork()  | Create child process        | ✅ Process creation    |
+| getline() | Read line from stream     | ✅ Input reading       |
+| isatty() | Check if terminal          | ✅ Prompt display control |
+| malloc() | Memory allocation          | ✅ All dynamic allocations |
+| free()   | Memory deallocation        | ✅ All memory freeing  |
+| printf() | Formatted output           | ✅ All standard output |
+| fprintf() | Formatted file output     | ✅ Error output to stderr |
+| signal() | Signal handling            | ✅ SIGINT (Ctrl+C) handling |
+| stat()   | Get file status            | ✅ PATH searching      |
+| waitpid()| Wait for specific process  | ✅ Child process handling |
+
+---
+
+##  `<string.h>` functions used
+
+| Function | Purpose                    | Used in our shell                |
+|----------|----------------------------|----------------------------------|
+| strcmp() | Compare strings            | ✅ Built-in command detection    |
+| strdup() | Duplicate string           | ✅ String duplication            |
+| strlen() | String length              | ✅ String operations             |
+| strncmp()| Compare n characters       | ✅ Environment variable matching |
+| strchr() | Find character in string   | ✅ Check for '/' in command      |
+| strtok() | Tokenize string            | ✅ PATH parsing                  |
+| sprintf()| Format string to buffer    | ✅ Construct full paths          |
+
+---
 ### Compilation
 
 Compile the shell using:
