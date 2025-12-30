@@ -1,1 +1,216 @@
-man page
+.TH HSH 1 "December 2024" "Simple Shell v1.0"
+.SH NAME
+hsh \- simple shell, a basic UNIX command line interpreter
+.SH SYNOPSIS
+.B hsh
+[\fIOPTION\fR]...
+.SH DESCRIPTION
+.B hsh
+is a simple UNIX command line interpreter that replicates basic behavior of
+the standard
+.B /bin/sh
+shell. It reads commands from standard input, parses them, searches for
+executables in the PATH environment variable, and executes them using
+system calls.
+.PP
+The shell supports both interactive and non-interactive modes.
+.SH OPTIONS
+The shell does not accept command-line options. All configuration is done
+through environment variables and built-in commands.
+.SH OVERVIEW
+The shell operates in a continuous loop:
+.IP 1. 3
+Displays a prompt when in interactive mode
+.IP 2. 3
+Reads a command line from standard input
+.IP 3. 3
+Parses the command and arguments
+.IP 4. 3
+Executes built-in commands or searches for external commands
+.IP 5. 3
+Waits for command completion and displays next prompt
+.PP
+The shell terminates when it encounters the
+.B exit
+command or end-of-file (Ctrl+D).
+.SH FUNCTIONS
+.TP
+.B main()
+Entry point of the shell. Contains the main loop that reads, parses, and executes commands.
+.TP
+.B display_prompt()
+Displays the shell prompt "#cisfun$ " when in interactive mode.
+.TP
+.B read_line()
+Reads a line of input from standard input using getline().
+.TP
+.B split_line()
+Splits the input line into tokens, handling whitespace separation.
+.TP
+.B trim_spaces()
+Removes leading and trailing whitespace from input strings.
+.TP
+.B execute_command()
+Executes commands by forking a child process and using execve().
+.TP
+.B find_in_path()
+Searches for executable commands in the PATH environment variable.
+.TP
+.B _getenv()
+Custom implementation of getenv() to retrieve environment variables.
+.TP
+.B print_env()
+Prints all current environment variables (built-in env command).
+.SH LIBRARY
+The shell uses the following standard C libraries:
+.IP \(bu 3
+stdio.h - Standard input/output functions
+.IP \(bu 3
+stdlib.h - Memory allocation and process control
+.IP \(bu 3
+string.h - String manipulation functions
+.IP \(bu 3
+unistd.h - POSIX operating system API
+.IP \(bu 3
+sys/wait.h - Process waiting functions
+.IP \(bu 3
+sys/stat.h - File status functions
+.IP \(bu 3
+signal.h - Signal handling
+.SH PATH SEARCH
+When a command is entered without an absolute or relative path,
+.B hsh
+searches for the executable in the directories listed in the PATH
+environment variable, in order. The search stops at the first matching
+executable file. If PATH is unset or empty, the shell only executes
+commands specified with an absolute or relative path.
+.PP
+The search algorithm:
+.IP 1. 3
+Check if command contains '/' character
+.IP 2. 3
+If yes, use as absolute/relative path directly
+.IP 3. 3
+If no, get PATH environment variable
+.IP 4. 3
+Tokenize PATH by ':' delimiter
+.IP 5. 3
+For each directory, construct full path: directory + "/" + command
+.IP 6. 3
+Check if file exists and is executable using stat()
+.IP 7. 3
+Return first valid path found
+.SH WHITESPACE HANDLING
+The shell handles whitespace as follows:
+.IP \(bu 3
+Leading and trailing whitespace is removed
+.IP \(bu 3
+Multiple spaces between arguments are treated as single delimiters
+.IP \(bu 3
+Empty lines (containing only whitespace) are ignored
+.IP \(bu 3
+The following whitespace characters are recognized: space, tab, newline, carriage return, form feed, vertical tab
+.PP
+Tokenization splits input on any whitespace character, preserving
+quoted strings as single tokens (if implemented).
+.SH BUILTINS
+.TP
+.B exit
+Exits the shell. Optional numeric argument sets exit status.
+Syntax: exit [n]
+.TP
+.B env
+Prints all current environment variables.
+Syntax: env
+.SH EXIT STATUS
+The shell returns the following exit statuses:
+.TP
+.B 0
+Success
+.TP
+.B 1
+General error (fork failure, etc.)
+.TP
+.B 2
+Invalid argument to built-in command
+.TP
+.B 127
+Command not found
+.TP
+.B Other
+Exit status propagated from executed command
+.PP
+The exit status of the last executed command is available in the
+.B $?
+variable (if implemented).
+.SH ENVIRONMENT
+The shell uses the following environment variables:
+.TP
+.B PATH
+Colon-separated list of directories to search for executable commands.
+If PATH is empty or not set, only absolute paths and relative paths
+starting with "./" or "../" can be executed.
+.TP
+.B environ
+Global variable containing the process environment.
+.SH SIGNALS
+.B hsh
+ignores SIGINT (Ctrl+C) in the parent process to prevent accidental
+termination of the shell itself. Child processes receive signals normally.
+.SH EXAMPLES
+Start an interactive session:
+.RS
+.PP
+.nf
+$ ./hsh
+#cisfun$ /bin/ls
+#cisfun$ ./myprogram
+#cisfun$ exit
+.fi
+.RE
+.PP
+Execute multiple commands from a file:
+.RS
+.PP
+.nf
+$ cat commands.txt
+ls -la
+pwd
+whoami
+$ cat commands.txt | ./hsh
+.fi
+.RE
+.PP
+Path search example:
+.RS
+.PP
+.nf
+$ PATH="/bin:/usr/bin"
+$ ./hsh
+#cisfun$ ls      # Found in /bin/ls
+#cisfun$ bash    # Found in /bin/bash
+.fi
+.RE
+.SH RETURN VALUES
+.TP
+.B 0
+Success
+.TP
+.B 127
+Command not found
+.TP
+.B 1
+Fork error or other internal error
+.TP
+.B Other
+Exit status of executed command
+.SH BUGS
+No known bugs. Report any issues to the authors.
+.SH AUTHOR
+Written by Lara Alzannan and Layla Alshehri.
+.SH "SEE ALSO"
+.BR sh (1),
+.BR bash (1),
+.BR execve (2),
+.BR fork (2),
+.BR waitpid (2)
