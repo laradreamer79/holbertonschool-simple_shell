@@ -1,5 +1,24 @@
 ## Simple Shell
 
+## Table of Contents
+1. Introduction
+- [Project Description](#project-description)
+- [Features](#features)
+2. Implementation & Usage
+- [Compilation](#compilation)
+- [Usage](#usage)
+3. Built-in Commands
+- [exit](#exit)
+- [env](#env)
+4. File Structure
+- [Files Description](#files-description)
+5. Technical Details
+- [Return Values](#return-values)
+- [Environment](#environment)
+6. Additional Information
+- [Authors](#authors)
+
+---
 ### Description
 
 This project is a simple UNIX command line interpreter (shell) written in C.
@@ -9,7 +28,6 @@ The shell reads commands from standard input, parses them, searches for
 executables using the `PATH` environment variable, and executes them using
 system calls.
 
----
 
 ### Features
 
@@ -36,7 +54,6 @@ Compile the shell using:
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 ```
 
----
 
 ### Usage
 
@@ -104,7 +121,6 @@ $ env
 * `127` when command is not found
 * Proper exit status propagation from child processes
 
----
 
 ### Environment
 
@@ -113,7 +129,5 @@ $ env
 
 ---
 ### Authors
-**Lara Alzannan And Layla Alshehri**
-
----
-
+- Lara Alzannan <https://github.com/laradreamer79>
+- Layla Alshehri <https://github.com/Laja99>
