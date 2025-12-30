@@ -302,7 +302,6 @@ Start an interactive session:
 .nf
 $ ./hsh
 #cisfun$ /bin/ls
-#cisfun$ ./myprogram
 #cisfun$ exit
 .fi
 .RE
@@ -311,11 +310,10 @@ Execute multiple commands from a file:
 .RS
 .PP
 .nf
-$ cat commands.txt
+$ cat shell.h
 ls -la
 pwd
 whoami
-$ cat commands.txt | ./hsh
 .fi
 .RE
 .PP
@@ -323,10 +321,8 @@ Path search example:
 .RS
 .PP
 .nf
-$ PATH="/bin:/usr/bin"
 $ ./hsh
 #cisfun$ ls      # Found in /bin/ls
-#cisfun$ bash    # Found in /bin/bash
 .fi
 .RE
 .SH RETURN VALUES
