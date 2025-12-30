@@ -1,21 +1,15 @@
 ## Simple Shell
 
 ## Table of Contents
-1. Introduction
 - [Project Description](#project-description)
 - [Features](#features)
-2. Implementation & Usage
 - [Compilation](#compilation)
 - [Usage](#usage)
-3. Built-in Commands
 - [exit](#exit)
 - [env](#env)
-4. File Structure
 - [Files Description](#files-description)
-5. Technical Details
 - [Return Values](#return-values)
 - [Environment](#environment)
-6. Additional Information
 - [Authors](#authors)
 
 ---
@@ -129,5 +123,5 @@ $ env
 
 ---
 ### Authors
-- Lara Alzannan <https://github.com/laradreamer79>
-- Layla Alshehri <https://github.com/Laja99>
+- **Lara Alzannan** [laradreamer79](https://github.com/laradreamer79)
+- **Layla Alshehri** [laja99](https://github.com/Laja99)
