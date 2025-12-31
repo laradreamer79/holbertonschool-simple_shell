@@ -152,6 +152,7 @@ $ env
 | `path.c`             | PATH searching logic                  |
 | `_getenv.c`          | Custom implementation of getenv       |
 | `trim_space.c`       | Removes leading and trailing spaces   |
+| env.c                | Handles the `env` built-in command to display environment variables |
 | `shell.h`            | Header file with prototypes           |
 | `man_1_simple_shell` | Manual page                           |
 | `AUTHORS`            | Project authors                       |
